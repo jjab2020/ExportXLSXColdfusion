@@ -31,7 +31,7 @@
 			/*numericStyle.fgcolor="blue";*/
 			numericStyle.font="arial";
 			numericStyle.alignment="center";
-			numericStyle.dataformat="0";
+			numericStyle.dataformat="0.00";
 
 			//creation du spreasheet	
 			spreadsheet = spreadsheetNew(sheetName,true);
