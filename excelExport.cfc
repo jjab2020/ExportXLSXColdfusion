@@ -7,7 +7,7 @@
 		<cfset list_column = "" />
 		<cfloop array="#arguments.columnData#" index="m">
 			<cfif structKeyExists(m, "id") >
-				<cfset list_column = listappend(list_column, UCase(m.column), ",") />
+				<cfset list_column = listappend(list_column, UCase(left(m.column,1))& right(m.column, len(m.column)-1), ",") />
 			</cfif>
 		</cfloop>
 		<cfscript>
