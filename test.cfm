@@ -1,6 +1,6 @@
 <CFQUERY NAME="GetData" DATASOURCE="MyDns">
 	SELECT *
-	FROM divers
+	FROM contacts
 </CFQUERY>
 
 <cfset dataArray = ArrayNew(1) />
