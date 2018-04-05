@@ -41,4 +41,5 @@
 	<cfinvokeargument name="sheetName" value="f1">
 	<cfinvokeargument name="pathfile" value=#mypath#>
 	<cfinvokeargument name="columnData" value="#dataArray#">
+	<cfinvokeargument name="removeHeader" value="false">
 </cfinvoke>
