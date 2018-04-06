@@ -47,10 +47,10 @@
 				spreadsheetAddRows(spreadsheet,myQyery);
 				spreadsheetFormatRow(spreadsheet,{alignment="center",color="white",fgcolor="indigo",font="arial",fontsize="13",bold="true",italic="true",bottomborder="thin"},1);
 				for (var rowIdx=1; rowIdx <= spreadsheet.getWorkbook().getSheetAt(0).getLastRowNum(); rowIdx++) {
+					SpreadSheetSetRowHeight(spreadsheet,rowIdx,150);
 					var rowObj = spreadsheet.getWorkbook().getSheetAt(0).getRow(rowIdx);
 					for (var cellIdx=1; cellIdx < rowObj.getLastCellNum()+ 1; cellIdx++) {
 						SpreadsheetFormatCell(spreadsheet,{alignment="center",font="arial"},rowIdx + 1,cellIdx);
-
 						for(i=1; i <= arrayLen(columnData); i++) {
 							if (columnData[i]['id'] EQ cellIdx) {
 								switch(columnData[i]['format']) {
@@ -70,6 +70,33 @@
 						}
 					}
 				}
+				/* remove the header if we need*/
+				if(removeHeader){
+					SpreadsheetShiftRows(spreadsheet,2,myQyery.recordCount + 1,-1); 
+					/*Shift row */
+					SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,1); 
+
+					/*Shift column*/
+					SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
+					/*autosize column*/
+					for(var j=0;j < arrayLen(columnData);j++){
+						spreadsheet.getWorkbook().getSheetAt(0).autoSizeColumn( j);
+					}
+					SpreadSheetSetColumnWidth(spreadsheet,2,10);
+					SpreadSheetSetColumnWidth(spreadsheet,arrayLen(columnData)+1,15);
+				}
+				else{
+
+
+					/*Shift row */
+					SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,1); 
+
+					/*Shift column*/
+					SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
+				}
+				/*Add info to xslx file*/
+				SpreadSheetAddInfo(spreadsheet,infos);
+
 			}
 			else
 			{
@@ -78,30 +105,7 @@
 				SpreadsheetMergeCells (spreadsheet, 2, 3, 2,15);
 				spreadsheetFormatCellRange(spreadsheet, {alignment="center",color="blue",font="arial",fontsize="16",bold="true",italic="true",bottomborder="thin",leftborder="thin",leftbordercolor="blue",rightborder="thin",rightbordercolor="blue",topborder="thin",topbordercolor="blue",verticalalignment="VERTICAL_center",bottombordercolor="blue"},2,2,3,15);
 			}
-			/* remove the header if we need*/
-			if(removeHeader){
-				SpreadsheetShiftRows(spreadsheet,2,myQyery.recordCount + 1,-1); 
-				/*Shift row */
-				SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,1); 
-
-				/*Shift column*/
-				SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
-				/*autosize column*/
-				for(var j=0;j < arrayLen(columnData);j++){
-					spreadsheet.getWorkbook().getSheetAt(0).autoSizeColumn( j);
-				}
-				SpreadSheetSetColumnWidth(spreadsheet,2,10);
-				SpreadSheetSetColumnWidth(spreadsheet,arrayLen(columnData)+1,15);
-			}
-			else{
-				/*Shift row */
-				SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,1); 
-
-				/*Shift column*/
-				SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
-			}
-			/*Add info to xslx file*/
-			SpreadSheetAddInfo(spreadsheet,infos);
+			
 			/*write the file*/
 			spreadsheetWrite(spreadsheet,pathfile,true);	
 			</cfscript>
