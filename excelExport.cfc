@@ -1,5 +1,5 @@
 <cfcomponent>
-	<cffunction name="spreadsheetNewFromQuery" access="public" output="true">
+	<cffunction name="spreadsheetNewFromQuery" access="public" output="false">
 		<cfargument name="myQyery" type="query" required="true" hint="requete sql passé">
 		<cfargument name="sheetName" type="string" default="Sheet1" required="false" hint="nom feuille xlsx" >
 		<cfargument name="pathfile" type="string" required="true" hint="chemin de fichier">
