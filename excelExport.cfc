@@ -1,5 +1,5 @@
 <cfcomponent>
-	<cffunction name="spreadsheetNewFromQuery" access="public" output="false">
+	<cffunction name="spreadsheetNewFromQuery" access="public" output="true">
 		<cfargument name="myQyery" type="query" required="true" hint="requete sql passé">
 		<cfargument name="sheetName" type="string" default="Sheet1" required="false" hint="nom feuille xlsx" >
 		<cfargument name="pathfile" type="string" required="true" hint="chemin de fichier">
@@ -44,7 +44,7 @@
 				/*Create the spreadsheet*/
 				spreadsheetAddRow(spreadsheet,list_column);
 				spreadsheetAddRows(spreadsheet,myQyery);
-				spreadsheetFormatRow(spreadsheet,{alignment="center",color="green",font="arial",fontsize="13",bold="true",italic="true",bottomborder="thin"},1);
+				spreadsheetFormatRow(spreadsheet,{alignment="center",color="white",fgcolor="indigo",font="arial",fontsize="13",bold="true",italic="true",bottomborder="thin"},1);
 				for (var rowIdx=1; rowIdx <= spreadsheet.getWorkbook().getSheetAt(0).getLastRowNum(); rowIdx++) {
 					var rowObj = spreadsheet.getWorkbook().getSheetAt(0).getRow(rowIdx);
 					for (var cellIdx=1; cellIdx < rowObj.getLastCellNum()+ 1; cellIdx++) {
@@ -80,15 +80,25 @@
 			/* remove the header if we need*/
 			if(removeHeader){
 				SpreadsheetShiftRows(spreadsheet,2,myQyery.recordCount + 1,-1); 
+				/*Shift row */
+				SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,1); 
+
+				/*Shift column*/
+				SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
+				/*autosize column*/
+				for(var j=0;j < arrayLen(columnData);j++){
+					spreadsheet.getWorkbook().getSheetAt(0).autoSizeColumn( j);
+				}
+				SpreadSheetSetColumnWidth(spreadsheet,2,10);
+				SpreadSheetSetColumnWidth(spreadsheet,arrayLen(columnData)+1,15);
 			}
-			/*Shift row */
-			SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,2); 
+			else{
+				/*Shift row */
+				SpreadsheetShiftRows(spreadsheet,1,myQyery.recordCount+1,1); 
 
-			/*Shift column*/
-			SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
-			/*autosize column*/
-			spreadsheet.getWorkbook().getSheetAt(javacast("int", 0)).autoSizeColumn( javacast("int", 0) );
-
+				/*Shift column*/
+				SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
+			}
 			/*write the file*/
 			spreadsheetWrite(spreadsheet,pathfile,true);	
 			</cfscript>

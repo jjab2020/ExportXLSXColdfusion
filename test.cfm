@@ -38,7 +38,7 @@
 
 <cfinvoke component="excelExport" method="spreadsheetNewFromQuery">
 	<cfinvokeargument name="myQyery" value="#GetData#">
-	<cfinvokeargument name="sheetName" value="f1">
+	<cfinvokeargument name="sheetName" value="DATA1">
 	<cfinvokeargument name="pathfile" value=#mypath#>
 	<cfinvokeargument name="columnData" value="#dataArray#">
 	<cfinvokeargument name="removeHeader" value="false">
