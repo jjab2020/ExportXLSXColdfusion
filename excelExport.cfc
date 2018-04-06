@@ -1,10 +1,11 @@
 <cfcomponent>
-	<cffunction name="spreadsheetNewFromQuery" access="public" output="false">
+	<cffunction name="spreadsheetNewFromQuery" access="public" output="true">
 		<cfargument name="myQyery" type="query" required="true" hint="requete sql passé">
 		<cfargument name="sheetName" type="string" default="Sheet1" required="false" hint="nom feuille xlsx" >
 		<cfargument name="pathfile" type="string" required="true" hint="chemin de fichier">
 		<cfargument name="columnData" type="object" required="true" hint="Columns data Passed" >
-		<cfargument name="removeHeader" type="boolean" required="true" hint="remove header" />
+		<cfargument name="removeHeader" type="boolean" required="true" hint="remove header">
+		<cfargument name="infos" type="struct" required="true" hint="infos fichier"/>
 		<cfset list_column = "" />
 		<cfloop array="#arguments.columnData#" index="m">
 			<cfif structKeyExists(m, "id") >
@@ -99,6 +100,8 @@
 				/*Shift column*/
 				SpreadsheetShiftColumns(spreadsheet,1,arrayLen(columnData),1);
 			}
+			/*Add info to xslx file*/
+			SpreadSheetAddInfo(spreadsheet,infos);
 			/*write the file*/
 			spreadsheetWrite(spreadsheet,pathfile,true);	
 			</cfscript>

@@ -36,10 +36,20 @@
 <cfset ArrayAppend(dataArray,dataStruct) />
 <cfset mypath = #GetDirectoryFromPath(GetCurrentTemplatePath())# & dateFormat(Now(),"yyyymmdd") & ".xlsx"/>
 
+
+<cfset infoStruct = StructNew() >
+<cfset infoStruct["title"] = "Export from mysql">
+<cfset infoStruct["category"] = "Cfscript cfml">
+<cfset infoStruct["author"] = "Jabrane Jabri">
+<cfset infoStruct["subject"] = "export data from mysql database to xslx">
+<cfset infoStruct["comments"] = "you have to create database before using the cfc script">
+<cfset infoStruct["manager"] = "Jabrane Jabri" />
+
 <cfinvoke component="excelExport" method="spreadsheetNewFromQuery">
 	<cfinvokeargument name="myQyery" value="#GetData#">
 	<cfinvokeargument name="sheetName" value="DATA1">
 	<cfinvokeargument name="pathfile" value=#mypath#>
 	<cfinvokeargument name="columnData" value="#dataArray#">
 	<cfinvokeargument name="removeHeader" value="false">
+	<cfinvokeargument name="infos" value="#infoStruct#">
 </cfinvoke>
