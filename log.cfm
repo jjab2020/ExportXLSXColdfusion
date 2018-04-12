@@ -2,6 +2,8 @@
 <!--- usage  --->
 <!---<cf_log var="a" filename="test.html" thread="1" />--->
 
+<!--- http://www.isummation.com/blog/custom-tag-to-log-data/ --->
+
 <!--- String List Of Variables --->
 <cfparam name="attributes.var" default="" type="string">
 <cfparam name="attributes.fileName" default="log.html">
